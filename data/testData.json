@@ -1,0 +1,27 @@
+{
+  "username": "standard_user",
+  "password": "secret_sauce",
+  "firstName": "test",
+  "lastName": "user",
+  "postalCode": "411028",
+  "expectedPrices": {
+    "backpack": "$29.99",
+    "bikeLight": "$9.99",
+    "tshirt": "$15.99"
+  },
+  "expectedSummary": {
+    "paymentInfo": "Payment Information:",
+    "paymentValue": "SauceCard #31337",
+    "shippingInfo": "Shipping Information:",
+    "shippingValue": "Free Pony Express Delivery!",
+    "itemTotal": "Item total: $55.97",
+    "tax": "Tax: $4.48",
+    "total": "Total: $60.45"
+  },
+  "cartItems": [ "Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt" ],
+  "confirmation": {
+    "title": "Checkout: Complete!",
+    "thankYou": "Thank you for your order!",
+    "dispatch": "Your order has been dispatched, and will arrive just as fast as the pony can get there!"
+  }
+}

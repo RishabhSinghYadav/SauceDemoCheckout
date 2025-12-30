@@ -1,0 +1,23 @@
+{
+  "name": "saucedemocheckout",
+  "version": "1.0.0",
+  "description": "User buy 3 items and successfully checkout in Sauce Labs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RishabhSinghYadav/SauceDemoCheckout.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RishabhSinghYadav/SauceDemoCheckout/issues"
+  },
+  "homepage": "https://github.com/RishabhSinghYadav/SauceDemoCheckout#readme",
+  "dependencies": {
+    "@playwright/test": "^1.57.0"
+  }
+}
