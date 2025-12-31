@@ -9,7 +9,7 @@
     "bikeLight": "$9.99",
     "tshirt": "$15.99"
   },
-  "expectedSummary": {
+  "expectedSummaryData": {
     "paymentInfo": "Payment Information:",
     "paymentValue": "SauceCard #31337",
     "shippingInfo": "Shipping Information:",
@@ -18,7 +18,7 @@
     "tax": "Tax: $4.48",
     "total": "Total: $60.45"
   },
-  "cartItems": [ "Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt" ],
+  "cartItemsDetails": [ "Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt" ],
   "confirmation": {
     "title": "Checkout: Complete!",
     "thankYou": "Thank you for your order!",

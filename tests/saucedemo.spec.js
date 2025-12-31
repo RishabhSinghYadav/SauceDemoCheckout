@@ -1,28 +1,28 @@
 const { test } = require('@playwright/test');
 const LoginPage = require('../pages/LoginPage');
-const InventoryPage = require('../pages/InventoryPage');
+const ProductsPage = require('../pages/ProductsPage');
 const CartPage = require('../pages/CartPage');
-const CheckoutPage = require('../pages/CheckoutPage');
+const CheckoutCartPage = require('../pages/CheckoutCartPage');
 const testData = require('../data/testData.json');
 
 test('Saucedemo checkout flow with POM', async ({ page }) => {
   const loginPage = new LoginPage(page);
-  const inventoryPage = new InventoryPage(page);
+  const productsPage = new ProductsPage(page);
   const cartPage = new CartPage(page);
-  const checkoutPage = new CheckoutPage(page);
+  const checkoutPage = new CheckoutCartPage(page);
 
-  await loginPage.goto();
-  await loginPage.login(testData.username, testData.password);
+  await loginPage.gotoURL();
+  await loginPage.loginUser(testData.username, testData.password);
 
-  await inventoryPage.addProduct(inventoryPage.backpackLink, testData.expectedPrices.backpack);
-  await inventoryPage.addProduct(inventoryPage.bikeLightLink, testData.expectedPrices.bikeLight);
-  await inventoryPage.addProduct(inventoryPage.tshirtLink, testData.expectedPrices.tshirt);
+  await productsPage.selectProduct(productsPage.backpackLink, testData.expectedPrices.backpack);
+  await productsPage.selectProduct(productsPage.bikeLightLink, testData.expectedPrices.bikeLight);
+  await productsPage.selectProduct(productsPage.tshirtLink, testData.expectedPrices.tshirt);
 
-  await inventoryPage.goToCart();
-  await cartPage.assertCartItems(testData.cartItems);
-  await cartPage.checkout();
+  await productsPage.clickToCart();
+  await cartPage.verifyCartItems(testData.cartItemsDetails);
+  await cartPage.clickOnCheckout();
 
-  await checkoutPage.fillDetails(testData.firstName, testData.lastName, testData.postalCode);
-  await checkoutPage.assertSummary(testData.expectedSummary);
-  await checkoutPage.finishCheckout(testData.confirmation);
+  await checkoutPage.fillAllDetails(testData.firstName, testData.lastName, testData.postalCode);
+  await checkoutPage.verifySummary(testData.expectedSummaryData);
+  await checkoutPage.finishButtonClick(testData.confirmation);
 });

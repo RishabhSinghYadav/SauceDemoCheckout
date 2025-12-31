@@ -1,54 +1,54 @@
 const { test, expect } = require('@playwright/test');
 const LoginPage = require('../pages/LoginPage');
-const InventoryPage = require('../pages/InventoryPage');
+const ProductsPage = require('../pages/ProductsPage');
 const CartPage = require('../pages/CartPage');
-const CheckoutPage = require('../pages/CheckoutPage');
+const CheckoutCartPage = require('../pages/CheckoutCartPage');
 
 const testData = require('../data/testData.json');
 
 test('Select 3 random items from cart', async ({ page }) => {
   const loginPage = new LoginPage(page);
-  const inventoryPage = new InventoryPage(page);
+  const productsPage = new ProductsPage(page);
   const cartPage = new CartPage(page);
-  const checkoutPage = new CheckoutPage(page);
+  const checkoutPage = new CheckoutCartPage(page);
   // Login
-  await loginPage.goto();
-  await loginPage.login(testData.username, testData.password);
+  await loginPage.gotoURL();
+  await loginPage.loginUser(testData.username, testData.password);
 
-  // Add items (for demo, add all three defined in JSON)
-  await inventoryPage.addProduct(inventoryPage.backpackLink, testData.expectedPrices.backpack);
-  await inventoryPage.addProduct(inventoryPage.bikeLightLink, testData.expectedPrices.bikeLight);
-  await inventoryPage.addProduct(inventoryPage.tshirtLink, testData.expectedPrices.tshirt);
+  // Select items
+  await productsPage.selectProduct(productsPage.backpackLink, testData.expectedPrices.backpack);
+  await productsPage.selectProduct(productsPage.bikeLightLink, testData.expectedPrices.bikeLight);
+  await productsPage.selectProduct(productsPage.tshirtLink, testData.expectedPrices.tshirt);
 
-  // Go to cart
-  await inventoryPage.goToCart();
+  // click to cart
+  await productsPage.clickToCart();
 
-  // Get all cart items
+  // Get all cart items in inventory
   const cartItems = await page.locator('.inventory_item_name').allTextContents();
   console.log('All items in cart:', cartItems);
 
-  // Select 3 random items
+  // Select first 3 random items
   const randomItems = cartItems
-    .sort(() => 0.5 - Math.random())   // shuffle
+    .sort(() => 0.5 - Math.random())   // shuffle items
     .slice(0, 3);                      // take first 3
 
-  console.log('Randomly selected items:', randomItems);
+  console.log('Randomly selected items for cart:', randomItems);
 
   //  assertion
   expect(randomItems.length).toBe(3);
 
-  //  action: click those random items
+  //  user click on those random items
 for (let item of randomItems) {
   await page.locator(`.inventory_item_name:has-text("${item}")`).click();
-  await page.goBack(); // return to cart after viewing
+  await page.goBack(); // return to cart after selection
   }
 
   // Proceed to checkout
-   await cartPage.checkout(); 
-   // Fill checkout details 
-   await checkoutPage.fillDetails(testData.firstName, testData.lastName, testData.postalCode); 
-   // Assert summary info 
-   await checkoutPage.assertSummary(testData.expectedSummary); 
-   // Finish checkout 
-   await checkoutPage.finishCheckout(testData.confirmation);
+   await cartPage.clickOnCheckout(); 
+   // Fill all checkout details 
+   await checkoutPage.fillAllDetails(testData.firstName, testData.lastName, testData.postalCode); 
+   // Assert summary info
+   await checkoutPage.verifySummary(testData.expectedSummaryData); 
+   // Finished checkout process
+   await checkoutPage.finishButtonClick(testData.confirmation);
 });

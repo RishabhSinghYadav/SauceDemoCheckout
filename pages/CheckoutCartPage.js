@@ -1,6 +1,6 @@
 const { expect } = require('@playwright/test');
 
-class CheckoutPage {
+class CheckoutCartPage {
   constructor(page) {
     this.page = page;
     this.firstNameInput = page.locator("//input[@id='first-name']");
@@ -10,14 +10,14 @@ class CheckoutPage {
     this.finishButton = page.locator("//button[normalize-space()='Finish']");
   }
 
-  async fillDetails(firstName, lastName, postalCode) {
+  async fillAllDetails(firstName, lastName, postalCode) {
     await this.firstNameInput.fill(firstName);
     await this.lastNameInput.fill(lastName);
     await this.postalCodeInput.fill(postalCode);
     await this.continueButton.click();
   }
 
-  async assertSummary(expectedSummary) {
+  async verifySummary(expectedSummary) {
     await expect(this.page.locator("(//div[normalize-space()='Payment Information:'])[1]")).toHaveText(expectedSummary.paymentInfo);
     await expect(this.page.locator("(//div[normalize-space()='SauceCard #31337'])[1]")).toHaveText(expectedSummary.paymentValue);
     await expect(this.page.locator("(//div[normalize-space()='Shipping Information:'])[1]")).toHaveText(expectedSummary.shippingInfo);
@@ -27,7 +27,7 @@ class CheckoutPage {
     await expect(this.page.locator("(//div[@class='summary_total_label'])[1]")).toHaveText(expectedSummary.total);
   }
 
-  async finishCheckout(expectedConfirmation) {
+  async finishButtonClick(expectedConfirmation) {
     await this.finishButton.click();
     await expect(this.page.locator("(//span[@class='title'])[1]")).toHaveText(expectedConfirmation.title);
     await expect(this.page.getByRole('heading', { name: expectedConfirmation.thankYou })).toContainText([expectedConfirmation.thankYou]);
@@ -35,4 +35,4 @@ class CheckoutPage {
   }
 }
 
-module.exports = CheckoutPage;
+module.exports = CheckoutCartPage;

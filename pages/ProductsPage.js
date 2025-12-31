@@ -1,7 +1,7 @@
 const { expect } = require('@playwright/test');
 
 
-class InventoryPage {
+class ProductsPage {
   constructor(page) {
     this.page = page;
     this.backpackLink = page.getByText('Sauce Labs Backpack');
@@ -12,16 +12,16 @@ class InventoryPage {
     this.cartLink = page.locator("//a[@class='shopping_cart_link']");
   }
 
-  async addProduct(linkLocator, expectedPrice) {
+  async selectProduct(linkLocator, expectedPrice) {
     await linkLocator.click();
     await expect(this.page.locator("(//div[@class='inventory_details_price'])[1]")).toHaveText(expectedPrice);
     await this.addToCartButton.click();
     await this.backButton.click();
   }
 
-  async goToCart() {
+  async clickToCart() {
     await this.cartLink.click();
   }
 }
 
-module.exports = InventoryPage;
+module.exports = ProductsPage;

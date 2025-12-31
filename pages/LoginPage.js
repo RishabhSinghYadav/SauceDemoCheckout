@@ -8,11 +8,11 @@ class LoginPage {
     this.loginButton = page.locator("//input[@id='login-button']");
   }
 
-  async goto() {
+  async gotoURL() {
     await this.page.goto('https://www.saucedemo.com/');
   }
 
-  async login(username, password) {
+  async loginUser(username, password) {
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
     await this.loginButton.click();
